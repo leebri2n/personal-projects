@@ -1,0 +1,35 @@
+{
+  "Shot": {
+    "x": [],
+    "y": [],
+    "t": []
+  },
+  #"Shot": [(0, 1, 1.2), ()]
+  "Goal": {
+    "x"
+  }
+}
+
+
+
+
+given x and y, use regression to mdel a success or not
+  - lgoistic regression
+
+process
+  - eda+visualization
+  - model
+    - can havel multiple versions of same modle
+
+    -histogram for time
+    -decison tree?
+
+to do list
+  - eda
+    - work with json
+      - observe significance of certain independent variables of interest\
+      - coordinates: make map of circles for success, x for score
+        - therefore, for example, you can model what kind of outcome
+  - build models
+    - measures by how much more effective is ovi near cirlce, not just
+      that he is
