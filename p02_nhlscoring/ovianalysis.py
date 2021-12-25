@@ -104,10 +104,15 @@ def sort_event(play, dict):
             yg.append(ycoord)
             tg.append(time)
 
-#store_year('2017', 82, id)
-#store_year('2018', 82, id)
+
+#store_year('2010', 82, id)
+#store_year('2011', 82, id)
+#store_year('2012', 48, id)
+#store_year('2013', 82, id)
+
+store_year('2018', 82, id)
 #store_year('2019', 82, id)
-store_year('2020', 56, id)
+#store_year('2020', 56, id)
 
 print("~~~~~~~~~~~~~~~~~~")
 
@@ -132,6 +137,8 @@ def goalcheck(type_df):
     return test
 league_goalcheck = goalcheck(league_df)
 player_goalcheck = goalcheck(player_df)
+league_goalcheck = np.array(league_goalcheck)
+player_goalcheck = np.array(player_goalcheck)
 
 #Make new dataframes with a check if the shot is a goal or not
 #League
@@ -162,10 +169,10 @@ for i in range(2):
     rink.draw(ax=ax[i], display_range="ozone")
 
 #Visualize raw shot-goal patterns
-rink.heatmap(league_sog_df.x, league_sog_df.y,
-    values=league_sog_df.goalcheck, cmap="magma", ax=ax[0], binsize=2)
-rink.heatmap(player_sog_df.x, player_sog_df.y,
-    values=player_sog_df.goalcheck, cmap="magma", ax=ax[1], binsize=2)
+#rink.heatmap(league_sog_df.x, league_sog_df.y,
+    #values=league_sog_df.goalcheck, cmap="magma", ax=ax[0], binsize=2)
+#rink.heatmap(player_sog_df.x, player_sog_df.y,
+    #values=player_sog_df.goalcheck, cmap="magma", ax=ax[1], binsize=2)
 
 rink.contourf(league_sog_df.x, league_sog_df.y,
     values=league_sog_df.goalcheck, ax=ax[0], binsize=20, cmap="bwr", levels=100)
