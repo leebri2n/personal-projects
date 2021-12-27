@@ -1,5 +1,6 @@
 #Brian Lee
 #Version @8.20.21
+#Working version @12.20.2021
 
 #Load packages
 import requests as req
@@ -111,8 +112,8 @@ def sort_event(play, dict):
 #store_year('2013', 82, id)
 
 store_year('2018', 82, id)
-#store_year('2019', 82, id)
-#store_year('2020', 56, id)
+store_year('2019', 82, id)
+store_year('2020', 56, id)
 
 print("~~~~~~~~~~~~~~~~~~")
 
@@ -145,6 +146,8 @@ player_goalcheck = np.array(player_goalcheck)
 league_sog_x = np.array(league_sog_x)
 np.abs(league_sog_x, out=league_sog_x) #Normalize coordinates
 league_sog_y = np.array(league_sog_y) #No normalization needed for y
+league_g_x = np.abs(np.array(league_df['Goal']['x']))
+league_g_y = np.array(league_df['Goal']['y'])
 
 league_sog_df = pd.DataFrame()
 league_sog_df['x'] = league_sog_x
@@ -155,6 +158,8 @@ league_sog_df['goalcheck'] = league_goalcheck
 player_sog_x = np.array(player_sog_x)
 np.abs(player_sog_x, out=player_sog_x)
 player_sog_y = np.array(player_sog_y)
+player_g_x = np.abs(np.array(player_df['Goal']['x']))
+player_g_y = np.array(player_df['Goal']['y'])
 
 player_sog_df = pd.DataFrame()
 player_sog_df['x'] = player_sog_x
@@ -184,20 +189,11 @@ rink.contourf(player_sog_df.x, player_sog_df.y,
 bounds = [-100.0, 100.0, -100, 100]
 grid = 30
 cnt = 0
-
 color_map = plt.cm.winter
 positive_cm = ListedColormap([mcolors.ColorConverter().to_rgb('#e1e5e5'),
     mcolors.ColorConverter().to_rgb('#d63b36')])
 negative_cm = ListedColormap([mcolors.ColorConverter().to_rgb('#e1e5e5'),
     mcolors.ColorConverter().to_rgb('#28aee4')])
-
-fig2 = plt.figure(figsize=(8,8))
-ax2 = fig2.add_subplot(111)
-relrink = NHLRink()
-rinkdraw = relrink.draw(display_range="ozone")
-
-I = Image.open('./ice-hockey-half.png')
-#ax2.imshow(I)
 
 width = 50
 height= 50
@@ -205,9 +201,7 @@ scalex = width/100*1.25
 scaley = height/100*1.8
 scalehex = 4.4*scalex
 
-league_g_x = np.abs(np.array(league_df['Goal']['x']))
-league_g_y = np.abs(np.array(league_df['Goal']['y']))
-
+###########################################################
 league_sog_hex = plt.hexbin(league_sog_x, league_sog_y,
     gridsize=grid, extent=bounds, mincnt=cnt, alpha=0)
 league_g_hex = plt.hexbin(league_g_x, league_g_y,
@@ -216,6 +210,11 @@ league_g_hex = plt.hexbin(league_g_x, league_g_y,
 league_offsets = league_sog_hex.get_offsets()
 league_sog_freq = league_sog_hex.get_array()
 league_g_freq = league_g_hex.get_array()
+
+fig2 = plt.figure(figsize=(8,8))
+ax2 = fig2.add_subplot(111)
+relrink = NHLRink()
+rinkdraw = relrink.draw(display_range="ozone")
 
 for i,j in enumerate(league_offsets):
     if league_sog_freq[i] < 25: continue
@@ -231,20 +230,15 @@ fig3 = plt.figure(figsize=(8,8))
 ax3 = fig3.add_subplot(111)
 rinkdraw2 = relrink.draw(display_range="ozone")
 
-player_g_x = np.abs(np.array(player_df['Goal']['x']))
-player_g_y = np.array(player_df['Goal']['y'])
-
 player_sog_hex = plt.hexbin(player_sog_x, player_sog_y,
     gridsize=grid, extent=bounds, mincnt=cnt, alpha=0)
 player_g_hex = plt.hexbin(player_g_x, player_g_y,
     gridsize=grid, extent=bounds, mincnt=cnt, alpha=0)
 
 player_offsets = player_sog_hex.get_offsets()
-player_g_offsets = player_g_hex.get_offsets()
-print(player_offsets)
-print(player_g_offsets)
-
 player_sog_freq = player_sog_hex.get_array()
+
+player_g_offsets = player_g_hex.get_offsets()
 player_g_freq = player_g_hex.get_array()
 
 #Visualize where player takes shots
@@ -264,8 +258,8 @@ for i, j in enumerate(player_g_offsets):
     radius2 = scalehex * math.sqrt(player_g_scale)
 
     hex2 = RegularPolygon((28+j[0]*scalex, (height/2)-j[1]*scaley-25), numVertices=6,
-        radius=radius2, orientation=np.radians(0), alpha=1.0, facecolor="indianred")
-    #rinkdraw2.add_patch(hex2)
+        radius=radius2, orientation=np.radians(0), alpha=1.0, facecolor="aquamarine")
+    rinkdraw2.add_patch(hex2)
 ###############################################
 league_eff = list()
 player_eff = list()
