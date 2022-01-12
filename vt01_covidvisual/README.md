@@ -1,6 +1,6 @@
 This is a school project for CS2114, submitted on 11 November, 2020. Therefore, all code is omitted so as to uphold academic integrity. Only the final result is shown.
 
-Using Java on this project, I parsed a .csv file containing COVID-19 data, and then visualized that data on a readable, interactive GUI. This data contained raw numbers for COVID-19 cases and deaths, grouped by U.S. state and categorized by racial group.
+In Java, I implmented a parser method that parses a .csv file containing COVID-19 data. The program then visualizes that data on a readable, interactive GUI. This data contained raw numbers for COVID-19 cases and deaths, grouped by U.S. state and categorized by racial group.
 
 The code I wrote first parses a .csv file for these numbers and stores them into my implementation of a doubly-linked list for easy access and calculation for calculating case-to-fatality ratios. I then wrote an insertion sort algorithm that was capable of reording the doubly-linked list based on one of two sorting criteria, case-to-fatality ratio value and alphabetical order by the racial group. With sorting capabilities in place, I used various graph, button, and shape libraries to construct a graphical user interface that displayed an interactive bar graph displaying those fatality ratios as the bars. Functional buttons at the bottom selected the desired state statistics to view, while buttons at the top chose the sorting criteria.
 
